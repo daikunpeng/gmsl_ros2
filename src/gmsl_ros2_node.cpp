@@ -47,7 +47,7 @@
 #include "publisher_factory.h"
 // #include "network.h"
 
-#define FRAME_SIZE 1920 * 1080
+#define FRAME_SIZE 1920 * 1080// 定义图片的大小
 
 using namespace std::chrono;
 using namespace std::chrono_literals;
@@ -125,11 +125,11 @@ public:
 
         void service_callback()
         {
-                if (streamOnFlag)
+                if (streamOnFlag) // 如果视频流的状态是开启
                 {
-                        globalTimeStamp = rclcpp::Clock{RCL_ROS_TIME}.now();
+                        globalTimeStamp = rclcpp::Clock{RCL_ROS_TIME}.now(); // 获取当前的ROS系统时间
 
-                        uint16_t *tmp1 = m_safeDataAccess.getNextElement();
+                        uint16_t *tmp1 = m_safeDataAccess.getNextElement(); // 获取下一个数据块？？
 
                         m_safeDataAccess.setReadytoStart();
 
@@ -161,7 +161,7 @@ int main(int argc, char *argv[])
                 "/dev/video1",
                 "/dev/video2",
                 "/dev/video3",
-        };
+        };//使用一个存储 string 的 vector 表示可以使用的摄像头列表
 
         std::string *arguments = parseArgs(argc, argv);
 
@@ -170,7 +170,7 @@ int main(int argc, char *argv[])
 
         while (rclcpp::ok())
         {
-                gmsl_node->service_callback();
+                gmsl_node->service_callback(); // 调用 service_callback 方法进行操作
                 rclcpp::spin_some(gmsl_node);
         }
 
